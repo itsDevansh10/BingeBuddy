@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BingeBuddy · TV Show Discovery</title>
+  <meta name="description" content="Search, filter and explore a catalog of TV shows with content-based recommendations.">
+  <meta name="theme-color" content="#081525">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231685FF'/%3E%3Cpath d='M12 9l11 7-11 7z' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#catalog">Skip to catalog</a>
+
+  <header class="site-header" id="site-header">
+    <div class="wrap header-inner">
+      <a href="#top" class="brand" id="brand" aria-label="BingeBuddy home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>
+        </span>
+        <span class="brand-name">Binge<span>Buddy</span></span>
+      </a>
+
+      <nav class="quick-nav" aria-label="Quick views">
+        <button type="button" class="nav-tab" data-preset="shows">Shows</button>
+        <button type="button" class="nav-tab" data-preset="top">Most voted</button>
+      </nav>
+
+      <div class="search">
+        <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <label for="search-input" class="sr-only">Search TV shows by title or description</label>
+        <input id="search-input" type="search" placeholder="Search titles or descriptions" autocomplete="off" spellcheck="false">
+        <button type="button" id="search-clear" class="search-clear" aria-label="Clear search" hidden>&times;</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" id="hero" aria-label="Featured show">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">Featured series</p>
+          <h1 id="hero-title">Discover your next series</h1>
+          <div class="meta-row" id="hero-meta" hidden>
+            <span class="rating" id="hero-rating"></span>
+            <span class="chip" id="hero-year"></span>
+            <span class="chip" id="hero-seasons"></span>
+          </div>
+          <p class="hero-genres" id="hero-genres"></p>
+          <p class="hero-overview" id="hero-overview">Loading the featured show…</p>
+          <div class="hero-actions">
+            <button type="button" class="btn btn-primary" id="hero-details-btn" disabled>View details</button>
+            <button type="button" class="btn btn-ghost" id="hero-similar-btn" disabled>Find similar shows</button>
+          </div>
+        </div>
+        <div class="hero-art" id="hero-art" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section class="catalog" id="catalog" aria-labelledby="catalog-title">
+      <div class="wrap">
+        <div class="catalog-head">
+          <div>
+            <h2 id="catalog-title">All TV shows</h2>
+            <p class="results-label" id="results-label" aria-live="polite">Loading…</p>
+          </div>
+          <div class="controls">
+            <label class="select-wrap">
+              <span class="sr-only">Sort by</span>
+              <select id="sort-select">
+                <option value="popularity">Most popular</option>
+                <option value="vote_count">Most voted</option>
+                <option value="vote_average">Highest rated</option>
+                <option value="first_air_date">Release date</option>
+                <option value="name">Title (A–Z)</option>
+              </select>
+            </label>
+            <button type="button" class="btn btn-outline" id="order-btn" aria-label="Toggle sort direction">
+              <svg id="order-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span id="order-label">Descending</span>
+            </button>
+            <button type="button" class="btn btn-outline" id="reset-btn">Reset</button>
+          </div>
+        </div>
+
+        <div class="genre-bar" id="genre-chips" role="group" aria-label="Filter by genre"></div>
+        <div class="active-filters" id="active-filters" hidden></div>
+
+        <div class="state" id="grid-error" role="alert" hidden>
+          <h3>Couldn't load shows</h3>
+          <p id="grid-error-msg"></p>
+          <button type="button" class="btn btn-primary" id="grid-retry">Try again</button>
+        </div>
+        <div class="state" id="grid-empty" hidden>
+          <h3>No shows match your search</h3>
+          <p>Try a different keyword or remove a filter.</p>
+          <button type="button" class="btn btn-primary" id="grid-empty-reset">Clear filters</button>
+        </div>
+
+        <div class="grid" id="shows-grid"></div>
+
+        <nav class="pager" id="pager" aria-label="Pagination" hidden>
+          <button type="button" class="btn btn-outline" id="page-first" aria-label="First page">&laquo;</button>
+          <button type="button" class="btn btn-outline" id="page-prev">Previous</button>
+          <span class="page-indicator" id="page-indicator" aria-live="polite">Page 1 of 1</span>
+          <button type="button" class="btn btn-outline" id="page-next">Next</button>
+          <button type="button" class="btn btn-outline" id="page-last" aria-label="Last page">&raquo;</button>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="site-footer">
+    <div class="wrap">
+      <p class="copyright">&copy; BingeBuddy</p>
+    </div>
+  </footer>
+
+  <div class="overlay" id="drawer-overlay" hidden></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" aria-hidden="true" tabindex="-1">
+    <button type="button" class="drawer-close" id="drawer-close" aria-label="Close details">&times;</button>
+    <div class="drawer-scroll" id="drawer-scroll">
+      <div class="drawer-top">
+        <div class="drawer-art" id="drawer-art" aria-hidden="true"></div>
+        <div class="drawer-head">
+          <h2 id="drawer-title">Loading…</h2>
+          <div class="meta-row">
+            <span class="rating" id="drawer-rating"></span>
+            <span class="chip" id="drawer-votes"></span>
+            <span class="chip" id="drawer-year"></span>
+          </div>
+          <div class="tag-row" id="drawer-genres"></div>
+        </div>
+      </div>
+
+      <section class="panel" aria-labelledby="ov-h">
+        <h3 id="ov-h">Overview</h3>
+        <p id="drawer-overview" class="overview-text"></p>
+      </section>
+
+      <section class="panel" aria-labelledby="ep-h">
+        <h3 id="ep-h">Seasons &amp; episodes</h3>
+        <div class="ep-stats">
+          <div><span class="ep-num" id="ep-seasons">—</span><span class="ep-lbl">Seasons</span></div>
+          <div><span class="ep-num" id="ep-episodes">—</span><span class="ep-lbl">Episodes</span></div>
+          <div><span class="ep-num" id="ep-avg">—</span><span class="ep-lbl">Avg per season</span></div>
+        </div>
+        <div class="ep-strip" id="ep-strip" aria-hidden="true"></div>
+        <p class="note" id="ep-note"></p>
+      </section>
+
+      <section class="panel" aria-labelledby="rec-h">
+        <h3 id="rec-h">More like this</h3>
+        <p class="note">Ranked by text similarity of genres and overview.</p>
+        <p class="note" id="rec-status" aria-live="polite"></p>
+        <div class="rec-grid" id="rec-grid"></div>
+      </section>
+    </div>
+  </aside>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

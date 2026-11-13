@@ -1,0 +1,32 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Large dataset files (TMDB CSV datasets are >70MB and should not be tracked in git)
+data/raw/*.csv
+data/processed/*.csv
+*.csv
+
+# Keep the directory structure
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Temporary files, logs, and artifacts
+*.log
+*.tmp
+.system_generated/
+
+# Editor and OS metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
